@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1i1g8ets7hwd"]
+[gd_scene load_steps=7 format=3 uid="uid://b1i1g8ets7hwd"]
 
 [ext_resource type="Theme" uid="uid://06nalyy5clgq" path="res://Assets/Theme.tres" id="1_glv2v"]
 [ext_resource type="Script" uid="uid://dv87xke83tj8w" path="res://Main.gd" id="2_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://yi0qo5jarv75" path="res://Common/IconButton.tscn" id="3_3dxm6"]
 [ext_resource type="FontFile" uid="uid://k5uaogkqtjoa" path="res://addons/fontawesome/fonts/fa-brands-400.woff2" id="3_cm0pq"]
 [ext_resource type="Script" uid="uid://meg4m8umy7m6" path="res://addons/fontawesome/FontAwesome.gd" id="4_fos0i"]
 [ext_resource type="FontFile" uid="uid://kur8ylb5ry6e" path="res://addons/fontawesome/fonts/fa-solid-900.woff2" id="5_fos0i"]
@@ -16,8 +17,12 @@ grow_vertical = 2
 theme = ExtResource("1_glv2v")
 script = ExtResource("2_uu6xs")
 
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=711171073]
+unique_name_in_owner = true
+
 [node name="AnimationTimer" type="Timer" parent="." unique_id=471611119]
-wait_time = 0.25
+unique_name_in_owner = true
+wait_time = 0.05
 autostart = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=641281833]
@@ -29,11 +34,35 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="VBoxContainer" unique_id=1926669606]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=491226172]
 layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer" unique_id=2519452]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer" unique_id=1926669606]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
 theme_override_font_sizes/font_size = 32
 text = "Preview Equip Textures"
-horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer" unique_id=1834001368]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "by Lacroix"
+vertical_alignment = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer" unique_id=1381478014]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 12
+text = "Currently supports _Head, _Body, & _Legs.
+Support for other EquipTypes is being worked on."
+horizontal_alignment = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=22339977]
 layout_mode = 2
@@ -97,10 +126,61 @@ layout_mode = 2
 text = "Create Preview"
 
 [node name="PlaybackControls" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=944713463]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls" unique_id=993775813]
 layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls" unique_id=2119273894]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="StepBack" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls/HBoxContainer" unique_id=1635265080 instance=ExtResource("3_3dxm6")]
+layout_mode = 2
+tooltip_text = "Step Back"
+iconName = "chevron-left"
+iconSize = 24
+
+[node name="PlayPause" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls/HBoxContainer" unique_id=2003543141 instance=ExtResource("3_3dxm6")]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Pause Playback"
+iconName = "pause"
+iconSize = 24
+
+[node name="StepForward" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls/HBoxContainer" unique_id=906363401 instance=ExtResource("3_3dxm6")]
+layout_mode = 2
+tooltip_text = "Step Forward"
+iconName = "chevron-right"
+iconSize = 24
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls" unique_id=864836506]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls/HBoxContainer2" unique_id=164171281]
+layout_mode = 2
+text = "x0.5"
+
+[node name="SpeedSlider" type="HSlider" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls/HBoxContainer2" unique_id=181438808]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+tooltip_text = "Playback Speed: x1.0"
+min_value = 0.5
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 4
+ticks_position = 3
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls/HBoxContainer2" unique_id=1677584691]
+layout_mode = 2
+text = "x2.0"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls" unique_id=1402765604]
 layout_mode = 2
@@ -161,6 +241,7 @@ metadata/_custom_type_script = "uid://meg4m8umy7m6"
 [node name="LinkButton" type="LinkButton" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer" unique_id=1974978582]
 layout_mode = 2
 text = "Issues / Questions / Feature Requests"
+uri = "https://github.com/EtherealCrusaders/TMLEssentials/issues/new"
 
 [node name="FontAwesome2" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer" unique_id=1174399746]
 auto_translate_mode = 2
@@ -197,6 +278,7 @@ metadata/_custom_type_script = "uid://meg4m8umy7m6"
 [node name="LinkButton" type="LinkButton" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2" unique_id=1319698022]
 layout_mode = 2
 text = "Please consider supporting me!"
+uri = "https://ko-fi.com/lacroixprojects"
 
 [node name="FontAwesome2" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2" unique_id=214759568]
 auto_translate_mode = 2
@@ -212,8 +294,76 @@ icon_size = 24
 icon_name = "circle-dollar-to-slot"
 metadata/_custom_type_script = "uid://meg4m8umy7m6"
 
+[node name="Popup" type="ColorRect" parent="." unique_id=502377159]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5019608)
+
+[node name="PanelContainer" type="PanelContainer" parent="Popup" unique_id=146306571]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Popup/PanelContainer" unique_id=989160489]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Popup/PanelContainer/MarginContainer" unique_id=2070500258]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Popup/PanelContainer/MarginContainer/VBoxContainer" unique_id=167745926]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Update Available!"
+
+[node name="HSeparator" type="HSeparator" parent="Popup/PanelContainer/MarginContainer/VBoxContainer" unique_id=157038548]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Popup/PanelContainer/MarginContainer/VBoxContainer" unique_id=813750629]
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "Great news! A new version of this app has been released. Is it a fix? A new feature? A whole new tool!?!? You won't know for sure until you update :)"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="LinkButton" type="LinkButton" parent="Popup/PanelContainer/MarginContainer/VBoxContainer" unique_id=1203357192]
+self_modulate = Color(0.36078432, 0.92156863, 0.7058824, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Click here to get the new version"
+uri = "https://github.com/EtherealCrusaders/TMLEssentials/releases/latest"
+
+[node name="Label2" type="Label" parent="Popup/PanelContainer/MarginContainer/VBoxContainer" unique_id=460306263]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 12
+text = "Click anywhere outside this panel to close it"
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="onHttpRequestRequestCompleted"]
 [connection signal="timeout" from="AnimationTimer" to="." method="onAnimationTimerTimeout"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/CreatePreviewContainer/CreatePreview" to="." method="onCreatePreviewPressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls/HBoxContainer/StepBack" to="." method="onStepBackPressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls/HBoxContainer/PlayPause" to="." method="onPlayPausePressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls/HBoxContainer/StepForward" to="." method="onStepForwardPressed"]
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls/HBoxContainer2/SpeedSlider" to="." method="onSpeedSliderValueChanged"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory" to="." method="onChooseDirectoryPressed"]
 [connection signal="canceled" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory/FileDialog" to="." method="onFileDialogCanceled"]
 [connection signal="dir_selected" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory/FileDialog" to="." method="onFileDialogDirSelected"]
+[connection signal="gui_input" from="Popup" to="." method="onPopupGuiInput"]

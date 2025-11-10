@@ -5,3 +5,4 @@ enum DrawnFrames { FrontShoulder, FrontArm, Head, Body, Legs, BackArm, BackShoul
 
 var frame = 0
 signal advanceFrame
+signal deletePreview(newCount: int)

@@ -8,7 +8,13 @@ var directory: String
 var textureFiles: Array[String]
 
 func _ready() -> void:
+	%HTTPRequest.request("https://api.github.com/repos/EtherealCrusaders/TMLEssentials/releases/latest", ["User-Agent: GodotGame"])
+
 	previewContainer.custom_minimum_size.x = get_viewport().get_visible_rect().size.x * 0.5
+	Global.deletePreview.connect(func(newCount: int):
+		if newCount <= 0:
+			%PlaybackControls.visible = false
+		)
 
 func onChooseDirectoryPressed() -> void:
 	%FileDialog.current_dir = directory
@@ -61,6 +67,7 @@ func onCreatePreviewPressed() -> void:
 	preview.directory = directory
 	preview.textures = %TextureList.get_children().filter(func(e): return e.button_pressed).map(func(e): return e.text)
 	%PreviewContainer.add_child(preview)
+	%PlaybackControls.visible = true
 
 	for i in %TextureList.get_children():
 		i.button_pressed = false
@@ -68,3 +75,43 @@ func onCreatePreviewPressed() -> void:
 func onAnimationTimerTimeout() -> void:
 	Global.frame += 1
 	Global.advanceFrame.emit()
+
+func onStepBackPressed() -> void:
+	Global.frame -= 1
+	Global.advanceFrame.emit()
+
+func onStepForwardPressed() -> void:
+	Global.frame += 1
+	Global.advanceFrame.emit()
+
+func onPlayPausePressed() -> void:
+	var pause = %PlayPause.iconName == "pause"
+	%PlayPause.iconName = "play" if pause else "pause"
+	%PlayPause.tooltip_text = ("Play" if pause else "Pause") + " Playback"
+	%AnimationTimer.paused = pause
+
+func onSpeedSliderValueChanged(value: float) -> void:
+	%SpeedSlider.tooltip_text = "Playback Speed: x" + str(value)
+	%AnimationTimer.wait_time = 0.05 / value
+
+func onHttpRequestRequestCompleted(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	if response_code != 200:
+		return
+
+	var json = JSON.new()
+	var data = json.parse(body.get_string_from_utf8())
+	if data.error != OK:
+		return
+
+	var latest_tag = data.result["tag_name"]
+	var current_version = ProjectSettings.get_setting("application/config/version")
+	if latest_tag != current_version:
+		%Popup.visible = true
+
+func onPopupGuiInput(event: InputEvent) -> void:
+	if event is not InputEventMouseButton:
+		return
+
+	var mouseEvent := event as InputEventMouseButton
+	if mouseEvent.button_index == MOUSE_BUTTON_LEFT and mouseEvent.pressed:
+		%Popup.hide()

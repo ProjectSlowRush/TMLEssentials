@@ -1,11 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://c8xuk4t0oy2w3"]
+[gd_scene load_steps=5 format=3 uid="uid://c8xuk4t0oy2w3"]
 
 [ext_resource type="PackedScene" uid="uid://yi0qo5jarv75" path="res://Common/IconButton.tscn" id="1_36v2b"]
 [ext_resource type="Script" uid="uid://dfgd2d3s54jg5" path="res://PreviewPanel.gd" id="1_k0gcd"]
+[ext_resource type="Theme" uid="uid://06nalyy5clgq" path="res://Assets/Theme.tres" id="1_t54jc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t54jc"]
+bg_color = Color(0.5562404, 0, 0.23441577, 1)
+border_color = Color(0.23529412, 0.23529412, 0.23529412, 1)
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [node name="PreviewPanel" type="PanelContainer" unique_id=254307831]
 offset_right = 540.0
 offset_bottom = 188.0
+theme = ExtResource("1_t54jc")
 script = ExtResource("1_k0gcd")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=865798467]
@@ -99,7 +110,32 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 168)
 layout_mode = 2
 
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=501346910]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_t54jc")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=528337017]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Delete" parent="PanelContainer/MarginContainer" unique_id=737192462 instance=ExtResource("1_36v2b")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+tooltip_text = "Delete Preview"
+iconName = "trash"
+iconSize = 24
+activeColor = Color(0.65697235, 0, 0.1864891, 1)
+
 [connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowIdleFrame" to="." method="onShowIdleFrameToggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowJumpFrame" to="." method="onShowJumpFrameToggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowWalkingAnimation" to="." method="onShowWalkingAnimationToggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowSwingingAnimation" to="." method="onShowSwingingAnimationToggled"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/Delete" to="." method="onDeletePressed"]

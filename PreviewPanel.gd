@@ -56,7 +56,7 @@ func advanceFrame():
 			if textureRect.name in ["Head", "Legs"]:
 				framePosition = Vector2(0, ((Global.frame % 14) + 6) if walk else 0)
 			elif textureRect.name in ["BackArm", "FrontArm"]:
-				framePosition = Vector2(([0, 1, 1, 1, 1, 0, 0, 0, 2, 3, 3, 2, 0, 0][Global.frame % 14] if walk else Global.frame % 4) + 3, (1 if walk else 0) + (2 if textureRect.name == "BackArm" else 0))
+				framePosition = Vector2(([0, 1, 1, 1, 1, 0, 0, 0, 2, 3, 3, 2, 0, 0][Global.frame % 14] if walk else [0, 1, 2, 3][Global.frame % 8 * 0.5]) + 3, (1 if walk else 0) + (2 if textureRect.name == "BackArm" else 0))
 
 			if framePosition != -Vector2.ONE:
 				textureRect.texture.region = Rect2(framePosition.x * 40, framePosition.y * 56, 40, 56)
@@ -65,6 +65,7 @@ func advanceFrame():
 				textureRect.texture.margin = Rect2(0, -2, 0, 0)
 			else:
 				textureRect.texture.margin = Rect2(0, 0, 0, 0)
+
 func createTexture(image: Image, equipType: String, framePosition: Vector2, container: Node):
 	var atlasTexture := AtlasTexture.new()
 	atlasTexture.atlas = ImageTexture.create_from_image(image)
@@ -77,3 +78,7 @@ func createTexture(image: Image, equipType: String, framePosition: Vector2, cont
 	textureRect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	textureRect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	container.add_child(textureRect)
+
+func onDeletePressed() -> void:
+	Global.deletePreview.emit(get_parent().get_child_count() - 1)
+	queue_free()
