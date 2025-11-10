@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1i1g8ets7hwd"]
+
+[ext_resource type="Theme" uid="uid://06nalyy5clgq" path="res://Assets/Theme.tres" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://dv87xke83tj8w" path="res://Main.gd" id="2_uu6xs"]
+
+[node name="Main" type="Control" unique_id=710179598]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_glv2v")
+script = ExtResource("2_uu6xs")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=328911584]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=641281833]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1926669606]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "EquipPreview"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=924073262]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PreviewContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer/ScrollContainer" unique_id=1333186605]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=587107721]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="ChooseDirectory" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1571287961]
+layout_mode = 2
+text = "Choose Directory"
+
+[node name="FileDialog" type="FileDialog" parent="MarginContainer/VBoxContainer/HBoxContainer/ChooseDirectory" unique_id=1293807221]
+unique_name_in_owner = true
+title = "Open a Directory"
+file_mode = 2
+access = 2
+use_native_dialog = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/ChooseDirectory" to="." method="onChooseDirectoryPressed"]
+[connection signal="dir_selected" from="MarginContainer/VBoxContainer/HBoxContainer/ChooseDirectory/FileDialog" to="." method="onFileDialogDirSelected"]

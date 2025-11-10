@@ -1,0 +1,41 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://06nalyy5clgq"]
+
+[ext_resource type="FontFile" uid="uid://ca8vuxe6siuq3" path="res://Assets/CascadiaMono-VariableFont_wght.ttf" id="1_xcxgj"]
+[ext_resource type="StyleBox" uid="uid://boy4khmpik1ny" path="res://Assets/ButtonPressed.tres" id="2_5wf4d"]
+[ext_resource type="StyleBox" uid="uid://cq030p25l64js" path="res://Assets/ButtonHover.tres" id="2_8dt5f"]
+[ext_resource type="StyleBox" uid="uid://ccnr1kv4v262c" path="res://Assets/ButtonNormal.tres" id="2_csnxt"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_5wf4d"]
+color = Color(0.3019608, 0.3019608, 0.3019608, 1)
+thickness = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5wf4d"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.23529412, 0.23529412, 0.23529412, 1)
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[resource]
+BoxContainer/constants/separation = 8
+Button/fonts/font = ExtResource("1_xcxgj")
+Button/styles/focus = ExtResource("2_5wf4d")
+Button/styles/hover = ExtResource("2_8dt5f")
+Button/styles/normal = ExtResource("2_csnxt")
+Button/styles/pressed = ExtResource("2_5wf4d")
+CheckBox/styles/hover_pressed = ExtResource("2_8dt5f")
+HSeparator/styles/separator = SubResource("StyleBoxLine_5wf4d")
+Label/fonts/font = ExtResource("1_xcxgj")
+MarginContainer/constants/margin_bottom = 8
+MarginContainer/constants/margin_left = 8
+MarginContainer/constants/margin_right = 8
+MarginContainer/constants/margin_top = 8
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_5wf4d")
+RichTextLabel/fonts/mono_font = ExtResource("1_xcxgj")
+RichTextLabel/fonts/normal_font = ExtResource("1_xcxgj")

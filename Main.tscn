@@ -1,0 +1,219 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1i1g8ets7hwd"]
+
+[ext_resource type="Theme" uid="uid://06nalyy5clgq" path="res://Assets/Theme.tres" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://dv87xke83tj8w" path="res://Main.gd" id="2_uu6xs"]
+[ext_resource type="FontFile" uid="uid://k5uaogkqtjoa" path="res://addons/fontawesome/fonts/fa-brands-400.woff2" id="3_cm0pq"]
+[ext_resource type="Script" uid="uid://meg4m8umy7m6" path="res://addons/fontawesome/FontAwesome.gd" id="4_fos0i"]
+[ext_resource type="FontFile" uid="uid://kur8ylb5ry6e" path="res://addons/fontawesome/fonts/fa-solid-900.woff2" id="5_fos0i"]
+
+[node name="Main" type="Control" unique_id=710179598]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_glv2v")
+script = ExtResource("2_uu6xs")
+
+[node name="AnimationTimer" type="Timer" parent="." unique_id=471611119]
+wait_time = 0.25
+autostart = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=641281833]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1926669606]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Preview Equip Textures"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=22339977]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/HBoxContainer" unique_id=1728665646]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/autohide = 0
+drag_area_highlight_in_editor = true
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer" unique_id=1494260346]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer" unique_id=1765840723]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer" unique_id=1895121486]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=924073262]
+custom_minimum_size = Vector2(288, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InfoContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=535030904]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer" unique_id=1991094305]
+layout_mode = 2
+
+[node name="Tooltip" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=1009596777]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(288, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "Select a directory to preview equip textures from. Only image files with an EquipType suffixed in its name (e.g. x_Head) can be used."
+fit_content = true
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=563559937]
+layout_mode = 2
+
+[node name="TextureList" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=763102039]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CreatePreviewContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=578655540]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/CreatePreviewContainer" unique_id=1342620646]
+layout_mode = 2
+
+[node name="CreatePreview" type="Button" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/CreatePreviewContainer" unique_id=1393837205]
+layout_mode = 2
+text = "Create Preview"
+
+[node name="PlaybackControls" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=944713463]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls" unique_id=993775813]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControls" unique_id=1402765604]
+layout_mode = 2
+
+[node name="ChooseDirectory" type="Button" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1571287961]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Choose Directory"
+
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory" unique_id=1293807221]
+unique_name_in_owner = true
+title = "Open a Directory"
+force_native = true
+file_mode = 2
+access = 2
+use_native_dialog = true
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer" unique_id=45181012]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PreviewContainer" type="HFlowContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/ScrollContainer2" unique_id=2081418176]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1262314088]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=1947848710]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/HBoxContainer" unique_id=991870611]
+layout_mode = 2
+
+[node name="FontAwesome" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer" unique_id=57821333]
+auto_translate_mode = 2
+layout_mode = 2
+localize_numeral_system = false
+theme_override_fonts/font = ExtResource("3_cm0pq")
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_fos0i")
+icon_size = 24
+icon_type = "brands"
+icon_name = "github"
+metadata/_custom_type_script = "uid://meg4m8umy7m6"
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer" unique_id=1974978582]
+layout_mode = 2
+text = "Issues / Questions / Feature Requests"
+
+[node name="FontAwesome2" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer" unique_id=1174399746]
+auto_translate_mode = 2
+layout_mode = 2
+localize_numeral_system = false
+theme_override_fonts/font = ExtResource("3_cm0pq")
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_fos0i")
+icon_size = 24
+icon_type = "brands"
+icon_name = "github"
+metadata/_custom_type_script = "uid://meg4m8umy7m6"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/PanelContainer/HBoxContainer" unique_id=931372866]
+layout_mode = 2
+
+[node name="FontAwesome" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2" unique_id=1938207596]
+auto_translate_mode = 2
+layout_mode = 2
+localize_numeral_system = false
+theme_override_fonts/font = ExtResource("5_fos0i")
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_fos0i")
+icon_size = 24
+icon_name = "circle-dollar-to-slot"
+metadata/_custom_type_script = "uid://meg4m8umy7m6"
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2" unique_id=1319698022]
+layout_mode = 2
+text = "Please consider supporting me!"
+
+[node name="FontAwesome2" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2" unique_id=214759568]
+auto_translate_mode = 2
+layout_mode = 2
+localize_numeral_system = false
+theme_override_fonts/font = ExtResource("5_fos0i")
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_fos0i")
+icon_size = 24
+icon_name = "circle-dollar-to-slot"
+metadata/_custom_type_script = "uid://meg4m8umy7m6"
+
+[connection signal="timeout" from="AnimationTimer" to="." method="onAnimationTimerTimeout"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/CreatePreviewContainer/CreatePreview" to="." method="onCreatePreviewPressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory" to="." method="onChooseDirectoryPressed"]
+[connection signal="canceled" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory/FileDialog" to="." method="onFileDialogCanceled"]
+[connection signal="dir_selected" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory/FileDialog" to="." method="onFileDialogDirSelected"]

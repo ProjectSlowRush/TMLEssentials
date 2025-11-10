@@ -1,0 +1,79 @@
+class_name PreviewPanel extends PanelContainer
+
+var directory: String
+var textures: Array
+
+func _ready() -> void:
+	Global.advanceFrame.connect(advanceFrame)
+
+	for texture in textures:
+		var equipType = texture.get_basename().split("_")[-1]
+		var image := Image.new()
+		if image.load(directory + "/" + texture) != OK:
+			continue
+
+		for container in [%IdleFrameContainer, %JumpFrameContainer, %WalkingAnimationContainer, %SwingingAnimationContainer] as Array[Node]:
+			var framePosition = Vector2.ZERO
+			var jump = container == %JumpFrameContainer
+			var showShoulders = container in [%IdleFrameContainer, %WalkingAnimationContainer]
+
+			if equipType != "Body":
+				framePosition = Vector2(0, 5) if jump else Vector2.ZERO
+				createTexture(image, equipType, framePosition, container)
+			else:
+				if showShoulders:
+					createTexture(image, "BackShoulder", Vector2.ONE, container)
+				createTexture(image, "BackArm", Vector2(2, 3 if jump else 2), container)
+				createTexture(image, equipType, Vector2.RIGHT if jump else Vector2.ZERO, container)
+				createTexture(image, "FrontArm", Vector2(2, 1 if jump else 0), container)
+				if showShoulders:
+					createTexture(image, "FrontShoulder", Vector2.DOWN, container)
+
+			var textureRects = container.get_children()
+			textureRects.sort_custom(func(a, b): return Global.DrawnFrames.keys().find(a.name) > Global.DrawnFrames.keys().find(b.name))
+
+			for i in container.get_children():
+				container.move_child(i, textureRects.find(i))
+
+
+func onShowIdleFrameToggled(toggled_on: bool) -> void:
+	%IdleFrameContainer.visible = toggled_on
+
+func onShowJumpFrameToggled(toggled_on: bool) -> void:
+	%JumpFrameContainer.visible = toggled_on
+
+func onShowWalkingAnimationToggled(toggled_on: bool) -> void:
+	%WalkingAnimationContainer.visible = toggled_on
+
+func onShowSwingingAnimationToggled(toggled_on: bool) -> void:
+	%SwingingAnimationContainer.visible = toggled_on
+
+func advanceFrame():
+	for container in [%WalkingAnimationContainer, %SwingingAnimationContainer] as Array[Node]:
+		var walk := container == %WalkingAnimationContainer
+		for textureRect in container.get_children():
+			var framePosition = -Vector2.ONE
+			if textureRect.name in ["Head", "Legs"]:
+				framePosition = Vector2(0, ((Global.frame % 14) + 6) if walk else 0)
+			elif textureRect.name in ["BackArm", "FrontArm"]:
+				framePosition = Vector2(([0, 1, 1, 1, 1, 0, 0, 0, 2, 3, 3, 2, 0, 0][Global.frame % 14] if walk else Global.frame % 4) + 3, (1 if walk else 0) + (2 if textureRect.name == "BackArm" else 0))
+
+			if framePosition != -Vector2.ONE:
+				textureRect.texture.region = Rect2(framePosition.x * 40, framePosition.y * 56, 40, 56)
+
+			if walk and textureRect.name not in ["Head", "Legs"] and (Global.frame % 14) in [1, 2, 3, 8, 9, 10]:
+				textureRect.texture.margin = Rect2(0, -2, 0, 0)
+			else:
+				textureRect.texture.margin = Rect2(0, 0, 0, 0)
+func createTexture(image: Image, equipType: String, framePosition: Vector2, container: Node):
+	var atlasTexture := AtlasTexture.new()
+	atlasTexture.atlas = ImageTexture.create_from_image(image)
+
+	atlasTexture.region = Rect2(framePosition.x * 40, framePosition.y * 56, 40, 56)
+
+	var textureRect := TextureRect.new()
+	textureRect.name = equipType
+	textureRect.texture = atlasTexture
+	textureRect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	textureRect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	container.add_child(textureRect)

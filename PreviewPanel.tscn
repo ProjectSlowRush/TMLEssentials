@@ -1,0 +1,105 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8xuk4t0oy2w3"]
+
+[ext_resource type="PackedScene" uid="uid://yi0qo5jarv75" path="res://Common/IconButton.tscn" id="1_36v2b"]
+[ext_resource type="Script" uid="uid://dfgd2d3s54jg5" path="res://PreviewPanel.gd" id="1_k0gcd"]
+
+[node name="PreviewPanel" type="PanelContainer" unique_id=254307831]
+offset_right = 540.0
+offset_bottom = 188.0
+script = ExtResource("1_k0gcd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=865798467]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=1191082803]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MarginContainer" unique_id=933270157]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="RotateResizeArms" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=1635265080 instance=ExtResource("1_36v2b")]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Toggle Rotate / Resize Arms Towards Cursor"
+toggle_mode = true
+iconName = "arrow-pointer"
+iconSize = 32
+
+[node name="ShowIdleFrame" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=1606729341 instance=ExtResource("1_36v2b")]
+modulate = Color(0.336, 0.7, 0.825, 0.75)
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Show / Hide Idle Frame"
+toggle_mode = true
+button_pressed = true
+iconName = "person"
+iconSize = 32
+activeColor = Color(0, 0.7661489, 0.8403863, 1)
+
+[node name="ShowJumpFrame" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=663450384 instance=ExtResource("1_36v2b")]
+modulate = Color(0.336, 0.7, 0.825, 0.75)
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Show / Hide Jump Frame"
+toggle_mode = true
+button_pressed = true
+iconName = "frog"
+iconSize = 24
+activeColor = Color(0, 0.7661489, 0.8403863, 1)
+
+[node name="ShowWalkingAnimation" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=883459559 instance=ExtResource("1_36v2b")]
+modulate = Color(0.336, 0.7, 0.825, 0.75)
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Show / Hide Walking Animation"
+toggle_mode = true
+button_pressed = true
+iconName = "person-walking"
+iconSize = 32
+activeColor = Color(0, 0.7661489, 0.8403863, 1)
+
+[node name="ShowSwingingAnimation" parent="HBoxContainer/MarginContainer/VBoxContainer" unique_id=595822364 instance=ExtResource("1_36v2b")]
+modulate = Color(0.336, 0.7, 0.825, 0.75)
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Show / Hide Swinging Animation"
+toggle_mode = true
+button_pressed = true
+iconName = "spoon"
+iconSize = 24
+activeColor = Color(0, 0.7661489, 0.8403863, 1)
+
+[node name="IdleFrameContainer" type="Control" parent="HBoxContainer" unique_id=1053732600]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 168)
+layout_mode = 2
+
+[node name="JumpFrameContainer" type="Control" parent="HBoxContainer" unique_id=191983633]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 168)
+layout_mode = 2
+
+[node name="WalkingAnimationContainer" type="Control" parent="HBoxContainer" unique_id=2032196770]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 168)
+layout_mode = 2
+
+[node name="SwingingAnimationContainer" type="Control" parent="HBoxContainer" unique_id=1539593207]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 168)
+layout_mode = 2
+
+[connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowIdleFrame" to="." method="onShowIdleFrameToggled"]
+[connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowJumpFrame" to="." method="onShowJumpFrameToggled"]
+[connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowWalkingAnimation" to="." method="onShowWalkingAnimationToggled"]
+[connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowSwingingAnimation" to="." method="onShowSwingingAnimationToggled"]
