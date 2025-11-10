@@ -2,6 +2,7 @@ class_name PreviewPanel extends PanelContainer
 
 var directory: String
 var textures: Array
+var shouldArmsResize := true
 
 func _ready() -> void:
 	Global.advanceFrame.connect(advanceFrame)
@@ -35,6 +36,9 @@ func _ready() -> void:
 			for i in container.get_children():
 				container.move_child(i, textureRects.find(i))
 
+func _process(_delta: float) -> void:
+	for i in %IdleFrameContainer.get_children().filter(func(e): return e.name in ["BackArm", "FrontArm"]):
+		i.texture.region = Rect2(((7 if i.name == "FrontArm" else 8) if shouldArmsResize else 2) * 40, ((3 - floor(clampf(get_global_mouse_position().distance_to(i.global_position) / 512.0, 0.0, 1.0) * 3) if shouldArmsResize else (2 if i.name == "BackArm" else 0))) * 56, 40, 56)
 
 func onShowIdleFrameToggled(toggled_on: bool) -> void:
 	%IdleFrameContainer.visible = toggled_on
@@ -82,3 +86,6 @@ func createTexture(image: Image, equipType: String, framePosition: Vector2, cont
 func onDeletePressed() -> void:
 	Global.deletePreview.emit(get_parent().get_child_count() - 1)
 	queue_free()
+
+func onRotateResizeArmsToggled(toggled_on: bool) -> void:
+	shouldArmsResize = toggled_on

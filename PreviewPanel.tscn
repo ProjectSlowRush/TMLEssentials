@@ -37,8 +37,9 @@ size_flags_horizontal = 0
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 size_flags_horizontal = 4
-tooltip_text = "Toggle Rotate / Resize Arms Towards Cursor"
+tooltip_text = "Toggle Resize Arms Towards Cursor"
 toggle_mode = true
+button_pressed = true
 iconName = "arrow-pointer"
 iconSize = 32
 
@@ -134,6 +135,7 @@ iconName = "trash"
 iconSize = 24
 activeColor = Color(0.65697235, 0, 0.1864891, 1)
 
+[connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/RotateResizeArms" to="." method="onRotateResizeArmsToggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowIdleFrame" to="." method="onShowIdleFrameToggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowJumpFrame" to="." method="onShowJumpFrameToggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/VBoxContainer/ShowWalkingAnimation" to="." method="onShowWalkingAnimationToggled"]

@@ -14,7 +14,7 @@ config/name="TMLEssentials"
 config/version="1.0.0"
 run/main_scene="uid://b1i1g8ets7hwd"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://c717ryv618c7w"
 
 [autoload]
 
@@ -46,4 +46,5 @@ enabled=PackedStringArray("res://addons/fontawesome/plugin.cfg")
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.101960786, 0.101960786, 0.101960786, 1)
