@@ -8,6 +8,11 @@ var directory: String
 var textureFiles: Array[String]
 
 func _ready() -> void:
+	get_window().focus_entered.connect(func():
+		for i in %PreviewContainer.get_children():
+			var panel = i as PreviewPanel
+			panel.reloadTextures()
+		)
 	%HTTPRequest.request("https://api.github.com/repos/EtherealCrusaders/TMLEssentials/releases/latest", ["User-Agent: GodotGame"])
 
 	previewContainer.custom_minimum_size.x = get_viewport().get_visible_rect().size.x * 0.5
@@ -94,16 +99,11 @@ func onSpeedSliderValueChanged(value: float) -> void:
 	%SpeedSlider.tooltip_text = "Playback Speed: x" + str(value)
 	%AnimationTimer.wait_time = 0.05 / value
 
-func onHttpRequestRequestCompleted(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+func onHttpRequestRequestCompleted(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 	if response_code != 200:
 		return
 
-	var json = JSON.new()
-	var data = json.parse(body.get_string_from_utf8())
-	if data.error != OK:
-		return
-
-	var latest_tag = data.result["tag_name"]
+	var latest_tag = JSON.parse_string(body.get_string_from_utf8())["tag_name"]
 	var current_version = ProjectSettings.get_setting("application/config/version")
 	if latest_tag != current_version:
 		%Popup.visible = true
