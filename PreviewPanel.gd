@@ -10,7 +10,15 @@ var armSize: int:
 
 		armSize = value
 
+var isMaximized: bool
+
 func _ready() -> void:
+	if isMaximized:
+		%IdleFrameContainer.custom_minimum_size *= 3
+		%JumpFrameContainer.custom_minimum_size *= 3
+		%WalkingAnimationContainer.custom_minimum_size *= 3
+		%SwingingAnimationContainer.custom_minimum_size *= 3
+		%ExtraControls.hide()
 	Global.advanceFrame.connect(advanceFrame)
 
 	for texture in textures:
@@ -90,6 +98,8 @@ func createTexture(image: Image, fullPath: String, equipType: String, framePosit
 	container.add_child(textureRect)
 
 func onDeletePressed() -> void:
+	if isMaximized:
+		return
 	Global.deletePreview.emit(get_parent().get_child_count() - 1)
 	queue_free()
 
@@ -110,3 +120,8 @@ func reloadTextures():
 		for container in [%IdleFrameContainer, %JumpFrameContainer, %WalkingAnimationContainer, %SwingingAnimationContainer] as Array[Node]:
 			for textureRect in container.get_children().filter(func(e): return e.get_meta("fullPath") == directory + "/" + texture):
 				textureRect.texture.atlas = ImageTexture.create_from_image(image)
+
+func onMaximizePressed() -> void:
+	if isMaximized:
+		return
+	Global.maximizePreview.emit(self)

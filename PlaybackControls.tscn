@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=3 uid="uid://bn2qr72321732"]
+
+[ext_resource type="Script" uid="uid://c3bogev2xd3f2" path="res://PlaybackControls.gd" id="1_jw04e"]
+[ext_resource type="PackedScene" uid="uid://yi0qo5jarv75" path="res://Common/IconButton.tscn" id="1_o3qd3"]
+
+[node name="PlaybackControls" type="VBoxContainer" unique_id=2026993703]
+visible = false
+size_flags_vertical = 8
+script = ExtResource("1_jw04e")
+
+[node name="HSeparator" type="HSeparator" parent="." unique_id=1365940443]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=966768533]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="StepBack" parent="HBoxContainer" unique_id=1635265080 instance=ExtResource("1_o3qd3")]
+layout_mode = 2
+tooltip_text = "Step Back"
+iconName = "chevron-left"
+iconSize = 24
+
+[node name="PlayPause" parent="HBoxContainer" unique_id=756264187 instance=ExtResource("1_o3qd3")]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Pause Playback"
+iconName = "pause"
+iconSize = 24
+
+[node name="StepForward" parent="HBoxContainer" unique_id=783520307 instance=ExtResource("1_o3qd3")]
+layout_mode = 2
+tooltip_text = "Step Forward"
+iconName = "chevron-right"
+iconSize = 24
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=2025739820]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="HBoxContainer2" unique_id=1953846614]
+layout_mode = 2
+text = "x0.5"
+
+[node name="SpeedSlider" type="HSlider" parent="HBoxContainer2" unique_id=837073813]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+tooltip_text = "Playback Speed: x1.0"
+min_value = 0.5
+max_value = 2.0
+step = 0.1
+value = 1.0
+tick_count = 4
+ticks_position = 3
+
+[node name="Label2" type="Label" parent="HBoxContainer2" unique_id=960407256]
+layout_mode = 2
+text = "x2.0"
+
+[node name="HSeparator2" type="HSeparator" parent="." unique_id=1696029072]
+layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainer/StepBack" to="." method="onStepBackPressed"]
+[connection signal="pressed" from="HBoxContainer/PlayPause" to="." method="onPlayPausePressed"]
+[connection signal="pressed" from="HBoxContainer/StepForward" to="." method="onStepForwardPressed"]
+[connection signal="value_changed" from="HBoxContainer2/SpeedSlider" to="." method="onSpeedSliderValueChanged"]

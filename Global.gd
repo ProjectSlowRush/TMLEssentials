@@ -8,3 +8,9 @@ var frame = 0
 signal advanceFrame
 @warning_ignore("unused_signal")
 signal deletePreview(newCount: int)
+@warning_ignore("unused_signal")
+signal maximizePreview(panel: PreviewPanel)
+@warning_ignore("unused_signal")
+signal playPausePlayback(paused: bool)
+@warning_ignore("unused_signal")
+signal setPlaybackSpeed(speed: float)

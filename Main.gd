@@ -3,6 +3,7 @@ extends Control
 const PREVIEW_PANEL = preload("uid://c8xuk4t0oy2w3")
 
 @onready var previewContainer: ScrollContainer = $VBoxContainer/HBoxContainer/HSplitContainer/ScrollContainer2
+@export var playbackControls: PlaybackControls
 
 var directory: String
 var textureFiles: Array[String]
@@ -18,8 +19,34 @@ func _ready() -> void:
 	previewContainer.custom_minimum_size.x = get_viewport().get_visible_rect().size.x * 0.5
 	Global.deletePreview.connect(func(newCount: int):
 		if newCount <= 0:
-			%PlaybackControls.visible = false
+			playbackControls.visible = false
 		)
+
+	Global.maximizePreview.connect(func(preview: PreviewPanel):
+		%Popup.show()
+		%MaximizedPreviewContainer.show()
+
+		var panel = PREVIEW_PANEL.instantiate() as PreviewPanel
+		panel.directory = preview.directory
+		panel.textures = preview.textures
+		panel.shouldArmsResize = preview.shouldArmsResize
+		panel.armSize = preview.armSize
+		panel.isMaximized = true
+		playbackControls.reparent(panel)
+		%MaximizedPreviewContainer.add_child(panel)
+		)
+
+	Global.playPausePlayback.connect(func(paused: bool):
+		%AnimationTimer.paused = paused
+		)
+
+	Global.setPlaybackSpeed.connect(func(speed: float):
+		%AnimationTimer.wait_time = 0.05 / speed
+		)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("cancel"):
+		hidePopup()
 
 func onChooseDirectoryPressed() -> void:
 	%FileDialog.current_dir = directory
@@ -72,7 +99,7 @@ func onCreatePreviewPressed() -> void:
 	preview.directory = directory
 	preview.textures = %TextureList.get_children().filter(func(e): return e.button_pressed).map(func(e): return e.text)
 	%PreviewContainer.add_child(preview)
-	%PlaybackControls.visible = true
+	playbackControls.visible = true
 
 	for i in %TextureList.get_children():
 		i.button_pressed = false
@@ -80,24 +107,6 @@ func onCreatePreviewPressed() -> void:
 func onAnimationTimerTimeout() -> void:
 	Global.frame += 1
 	Global.advanceFrame.emit()
-
-func onStepBackPressed() -> void:
-	Global.frame -= 1
-	Global.advanceFrame.emit()
-
-func onStepForwardPressed() -> void:
-	Global.frame += 1
-	Global.advanceFrame.emit()
-
-func onPlayPausePressed() -> void:
-	var pause = %PlayPause.iconName == "pause"
-	%PlayPause.iconName = "play" if pause else "pause"
-	%PlayPause.tooltip_text = ("Play" if pause else "Pause") + " Playback"
-	%AnimationTimer.paused = pause
-
-func onSpeedSliderValueChanged(value: float) -> void:
-	%SpeedSlider.tooltip_text = "Playback Speed: x" + str(value)
-	%AnimationTimer.wait_time = 0.05 / value
 
 func onHttpRequestRequestCompleted(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 	if response_code != 200:
@@ -114,4 +123,13 @@ func onPopupGuiInput(event: InputEvent) -> void:
 
 	var mouseEvent := event as InputEventMouseButton
 	if mouseEvent.button_index == MOUSE_BUTTON_LEFT and mouseEvent.pressed:
-		%Popup.hide()
+		hidePopup()
+
+func hidePopup():
+	%Popup.hide()
+	%UpdatePanel.hide()
+	playbackControls.reparent(%PlaybackControlsContainer)
+	for i in %MaximizedPreviewContainer.get_children():
+		i.queue_free()
+
+	%MaximizedPreviewContainer.hide()
