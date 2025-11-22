@@ -1,6 +1,5 @@
 class_name PreviewPanel extends PanelContainer
 
-var directory: String
 var textures: Array
 var shouldArmsResize := true
 var armSize: int:
@@ -14,17 +13,17 @@ var isMaximized: bool
 
 func _ready() -> void:
 	if isMaximized:
-		%IdleFrameContainer.custom_minimum_size *= 3
-		%JumpFrameContainer.custom_minimum_size *= 3
-		%WalkingAnimationContainer.custom_minimum_size *= 3
-		%SwingingAnimationContainer.custom_minimum_size *= 3
+		%IdleFrameContainer.custom_minimum_size *= 1.75
+		%JumpFrameContainer.custom_minimum_size *= 1.75
+		%WalkingAnimationContainer.custom_minimum_size *= 1.75
+		%SwingingAnimationContainer.custom_minimum_size *= 1.75
 		%ExtraControls.hide()
 	Global.advanceFrame.connect(advanceFrame)
 
 	for texture in textures:
 		var equipType = texture.get_basename().split("_")[-1]
 		var image := Image.new()
-		if image.load(directory + "/" + texture) != OK:
+		if image.load(texture) != OK:
 			continue
 
 		for container in [%IdleFrameContainer, %JumpFrameContainer, %WalkingAnimationContainer, %SwingingAnimationContainer] as Array[Node]:
@@ -34,15 +33,15 @@ func _ready() -> void:
 
 			if equipType != "Body":
 				framePosition = Vector2(0, 5) if jump else Vector2.ZERO
-				createTexture(image, directory + "/" + texture, equipType, framePosition, container)
+				createTexture(image, texture, equipType, framePosition, container)
 			else:
 				if showShoulders:
-					createTexture(image, directory + "/" + texture, "BackShoulder", Vector2.ONE, container)
-				createTexture(image, directory + "/" + texture, "BackArm", Vector2(2, 3 if jump else 2), container)
-				createTexture(image, directory + "/" + texture, equipType, Vector2.RIGHT if jump else Vector2.ZERO, container)
-				createTexture(image, directory + "/" + texture, "FrontArm", Vector2(2, 1 if jump else 0), container)
+					createTexture(image, texture, "BackShoulder", Vector2.ONE, container)
+				createTexture(image, texture, "BackArm", Vector2(2, 3 if jump else 2), container)
+				createTexture(image, texture, equipType, Vector2.RIGHT if jump else Vector2.ZERO, container)
+				createTexture(image, texture, "FrontArm", Vector2(2, 1 if jump else 0), container)
 				if showShoulders:
-					createTexture(image, directory + "/" + texture, "FrontShoulder", Vector2.DOWN, container)
+					createTexture(image, texture, "FrontShoulder", Vector2.DOWN, container)
 
 			var textureRects = container.get_children()
 			textureRects.sort_custom(func(a, b): return Global.DrawnFrames.keys().find(a.name) > Global.DrawnFrames.keys().find(b.name))
@@ -51,7 +50,7 @@ func _ready() -> void:
 				container.move_child(i, textureRects.find(i))
 
 func _process(_delta: float) -> void:
-	armSize = 3 - floor(clampf(get_global_mouse_position().distance_to(%IdleFrameContainer.global_position) / 512.0, 0.0, 1.0) * 3)
+	armSize = 3 - floor(clampf(get_global_mouse_position().distance_to(%IdleFrameContainer.global_position + %IdleFrameContainer.size * 0.5) / 512.0, 0.0, 1.0) * 3)
 
 func onShowIdleFrameToggled(toggled_on: bool) -> void:
 	%IdleFrameContainer.visible = toggled_on
@@ -70,7 +69,7 @@ func advanceFrame():
 		var walk := container == %WalkingAnimationContainer
 		for textureRect in container.get_children():
 			var framePosition = -Vector2.ONE
-			if textureRect.name in ["Head", "Legs"]:
+			if textureRect.name in ["Head", "Legs", "Shoes", "Shield", "Face", "Waist"]:
 				framePosition = Vector2(0, ((Global.frame % 13) + 7) if walk else 0)
 			elif textureRect.name in ["BackArm", "FrontArm"]:
 				framePosition = Vector2(([0, 1, 1, 1, 1, 0, 0, 0, 2, 3, 3, 2, 0][Global.frame % 13] if walk else [0, 1, 2, 3][Global.frame % 8 * 0.5]) + 3, (1 if walk else 0) + (2 if textureRect.name == "BackArm" else 0))
@@ -78,7 +77,7 @@ func advanceFrame():
 			if framePosition != -Vector2.ONE:
 				textureRect.texture.region = Rect2(framePosition.x * 40, framePosition.y * 56, 40, 56)
 
-			if walk and textureRect.name not in ["Head", "Legs"] and (Global.frame % 13) in [0, 1, 2, 7, 8, 9]:
+			if walk and textureRect.name in ["Body", "BackShoulder", "BackArm", "FrontShoulder", "FrontArm", "Beard", "Neck"] and (Global.frame % 13) in [0, 1, 2, 7, 8, 9]:
 				textureRect.texture.margin = Rect2(0, -2, 0, 0)
 			else:
 				textureRect.texture.margin = Rect2(0, 0, 0, 0)
@@ -114,11 +113,11 @@ func setArmFrame(frame: int):
 func reloadTextures():
 	for texture in textures:
 		var image := Image.new()
-		if image.load(directory + "/" + texture) != OK:
+		if image.load(texture) != OK:
 			continue
 
 		for container in [%IdleFrameContainer, %JumpFrameContainer, %WalkingAnimationContainer, %SwingingAnimationContainer] as Array[Node]:
-			for textureRect in container.get_children().filter(func(e): return e.get_meta("fullPath") == directory + "/" + texture):
+			for textureRect in container.get_children().filter(func(e): return e.get_meta("fullPath") == texture):
 				textureRect.texture.atlas = ImageTexture.create_from_image(image)
 
 func onMaximizePressed() -> void:

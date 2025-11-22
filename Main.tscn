@@ -63,7 +63,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 12
-text = "Currently supports _Head, _Body, & _Legs.
+text = "Currently supports most armor/accessory sheets.
 Support for other EquipTypes is being worked on."
 horizontal_alignment = 2
 
@@ -87,28 +87,54 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=924073262]
-custom_minimum_size = Vector2(288, 0)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="InfoContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=535030904]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer" unique_id=1991094305]
 layout_mode = 2
 
-[node name="Tooltip" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=1009596777]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(288, 0)
+[node name="SearchContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=1662371605]
 layout_mode = 2
-bbcode_enabled = true
-text = "Select a directory to preview equip textures from. Only image files with an EquipType suffixed in its name (e.g. x_Head) can be used."
-fit_content = true
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=563559937]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/SearchContainer" unique_id=1368084307]
 layout_mode = 2
+
+[node name="FontAwesome" type="Label" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/SearchContainer/HBoxContainer" unique_id=1960779393]
+auto_translate_mode = 2
+layout_mode = 2
+size_flags_horizontal = 0
+localize_numeral_system = false
+theme_override_fonts/font = ExtResource("5_fos0i")
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_fos0i")
+icon_size = 24
+icon_name = "magnifying-glass"
+metadata/_custom_type_script = "uid://meg4m8umy7m6"
+
+[node name="SearchFiles" type="LineEdit" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/SearchContainer/HBoxContainer" unique_id=1492298613]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search Files"
+keep_editing_on_text_submit = true
+context_menu_enabled = false
+emoji_menu_enabled = false
+clear_button_enabled = true
+select_all_on_focus = true
+caret_blink = true
 
 [node name="TextureList" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=763102039]
 unique_name_in_owner = true
@@ -135,14 +161,14 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_3dxm6")
 
 [node name="PlaybackControls" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/PlaybackControlsContainer" unique_id=2026993703 instance=ExtResource("3_3dxm6")]
 layout_mode = 2
-size_flags_vertical = 8
 
 [node name="ChooseDirectory" type="Button" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1571287961]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(92.16, 0)
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 8
 text = "Choose Directory"
+autowrap_mode = 3
 
 [node name="FileDialog" type="FileDialog" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory" unique_id=1293807221]
 unique_name_in_owner = true
@@ -152,16 +178,33 @@ file_mode = 2
 access = 2
 use_native_dialog = true
 
-[node name="ScrollContainer2" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer" unique_id=45181012]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer" unique_id=1318925043]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/MarginContainer" unique_id=45181012]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/scrollbar_h_separation = 8
 
-[node name="PreviewContainer" type="HFlowContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/ScrollContainer2" unique_id=2081418176]
+[node name="PreviewContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/MarginContainer/ScrollContainer2" unique_id=193491526]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Tooltip" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/HSplitContainer/MarginContainer" unique_id=1009596777]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "Using the left panel, select a directory to preview equip textures from. Only image files with an EquipType suffixed in its name (e.g. x_Head) can be used."
+fit_content = true
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1262314088]
 layout_mode = 2
@@ -219,12 +262,12 @@ layout_mode = 2
 localize_numeral_system = false
 theme_override_fonts/font = ExtResource("5_fos0i")
 theme_override_font_sizes/font_size = 24
-text = ""
+text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("4_fos0i")
 icon_size = 24
-icon_name = "circle-dollar-to-slot"
+icon_name = "gift"
 metadata/_custom_type_script = "uid://meg4m8umy7m6"
 
 [node name="LinkButton" type="LinkButton" parent="VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2" unique_id=1319698022]
@@ -238,12 +281,12 @@ layout_mode = 2
 localize_numeral_system = false
 theme_override_fonts/font = ExtResource("5_fos0i")
 theme_override_font_sizes/font_size = 24
-text = ""
+text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("4_fos0i")
 icon_size = 24
-icon_name = "circle-dollar-to-slot"
+icon_name = "gift"
 metadata/_custom_type_script = "uid://meg4m8umy7m6"
 
 [node name="Popup" type="ColorRect" parent="." unique_id=502377159]
@@ -326,6 +369,7 @@ theme_override_constants/margin_bottom = 64
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="onHttpRequestRequestCompleted"]
 [connection signal="timeout" from="AnimationTimer" to="." method="onAnimationTimerTimeout"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/SearchContainer/HBoxContainer/SearchFiles" to="." method="onSearchFilesTextChanged"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/CreatePreviewContainer/CreatePreview" to="." method="onCreatePreviewPressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory" to="." method="onChooseDirectoryPressed"]
 [connection signal="canceled" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory/FileDialog" to="." method="onFileDialogCanceled"]

@@ -98,23 +98,27 @@ activeColor = Color(0, 0.7661489, 0.8403863, 1)
 
 [node name="IdleFrameContainer" type="Control" parent="HBoxContainer" unique_id=1053732600]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 168)
+custom_minimum_size = Vector2(200, 280)
 layout_mode = 2
+size_flags_horizontal = 6
 
 [node name="JumpFrameContainer" type="Control" parent="HBoxContainer" unique_id=191983633]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 168)
+custom_minimum_size = Vector2(200, 280)
 layout_mode = 2
+size_flags_horizontal = 6
 
 [node name="WalkingAnimationContainer" type="Control" parent="HBoxContainer" unique_id=2032196770]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 168)
+custom_minimum_size = Vector2(200, 280)
 layout_mode = 2
+size_flags_horizontal = 6
 
 [node name="SwingingAnimationContainer" type="Control" parent="HBoxContainer" unique_id=1539593207]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 168)
+custom_minimum_size = Vector2(200, 280)
 layout_mode = 2
+size_flags_horizontal = 6
 
 [node name="ExtraControls" type="MarginContainer" parent="." unique_id=528337017]
 unique_name_in_owner = true

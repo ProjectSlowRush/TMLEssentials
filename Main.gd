@@ -2,7 +2,7 @@ extends Control
 
 const PREVIEW_PANEL = preload("uid://c8xuk4t0oy2w3")
 
-@onready var previewContainer: ScrollContainer = $VBoxContainer/HBoxContainer/HSplitContainer/ScrollContainer2
+@onready var previewContainer: ScrollContainer = $VBoxContainer/HBoxContainer/HSplitContainer/MarginContainer/ScrollContainer2
 @export var playbackControls: PlaybackControls
 
 var directory: String
@@ -19,7 +19,8 @@ func _ready() -> void:
 	previewContainer.custom_minimum_size.x = get_viewport().get_visible_rect().size.x * 0.5
 	Global.deletePreview.connect(func(newCount: int):
 		if newCount <= 0:
-			playbackControls.visible = false
+			playbackControls.hide()
+			%Tooltip.show()
 		)
 
 	Global.maximizePreview.connect(func(preview: PreviewPanel):
@@ -27,7 +28,6 @@ func _ready() -> void:
 		%MaximizedPreviewContainer.show()
 
 		var panel = PREVIEW_PANEL.instantiate() as PreviewPanel
-		panel.directory = preview.directory
 		panel.textures = preview.textures
 		panel.shouldArmsResize = preview.shouldArmsResize
 		panel.armSize = preview.armSize
@@ -61,11 +61,14 @@ func onFileDialogDirSelected(dir: String) -> void:
 	for i in %TextureList.get_children():
 		i.queue_free()
 
-	%Tooltip.text = "Select desired textures to create a preview. A preview can have at most one of each EquipType" if len(textureFiles) > 0 else "[color=red]You selected a directory with no valid image files. Only those with an EquipType suffixed in its name (e.g. x_Head) can be used."
+	%SearchFiles.text = ""
+	%InfoContainer.visible = len(textureFiles) > 0
+	%Tooltip.text = "Select desired textures to create a preview. Each preview can have at most one of each EquipType" if len(textureFiles) > 0 else "[color=red]You selected a directory with no valid image files. Only those with an EquipType suffixed in its name (e.g. x_Head) can be used."
 
 	for i in textureFiles:
 		var checkbox = CheckBox.new()
-		checkbox.text = i
+		checkbox.text = i.split("/")[-1]
+		checkbox.set_meta("fullPath", i)
 		checkbox.connect("toggled", Callable(self, "onTextureCheckBoxToggled").bind(checkbox))
 		%TextureList.add_child(checkbox)
 
@@ -81,9 +84,11 @@ func getImageFilesFromDirectory(dir: String) -> Array[String]:
 	dirAccess.list_dir_begin()
 	var file := dirAccess.get_next()
 	while file != "":
-		if not dirAccess.current_is_dir():
+		if dirAccess.current_is_dir():
+			result.append_array(getImageFilesFromDirectory(dir + "/" + file))
+		else:
 			if "." + file.get_extension().to_lower() in [".png", ".jpg", ".jpeg"] and Global.EquipType.keys().any(func(e): return file.get_basename().ends_with("_" + e)):
-				result.append(file)
+				result.append(dir + "/" + file)
 		file = dirAccess.get_next()
 	dirAccess.list_dir_end()
 
@@ -96,9 +101,9 @@ func onTextureCheckBoxToggled(toggled_on: bool, checkbox: CheckBox) -> void:
 
 func onCreatePreviewPressed() -> void:
 	var preview := PREVIEW_PANEL.instantiate() as PreviewPanel
-	preview.directory = directory
-	preview.textures = %TextureList.get_children().filter(func(e): return e.button_pressed).map(func(e): return e.text)
+	preview.textures = %TextureList.get_children().filter(func(e): return e.button_pressed).map(func(e): return e.get_meta("fullPath"))
 	%PreviewContainer.add_child(preview)
+	%Tooltip.hide()
 	playbackControls.visible = true
 
 	for i in %TextureList.get_children():
@@ -133,3 +138,15 @@ func hidePopup():
 		i.queue_free()
 
 	%MaximizedPreviewContainer.hide()
+
+func onSearchFilesTextChanged(new_text: String) -> void:
+	for i in %TextureList.get_children():
+		if new_text == "":
+			i.show()
+			continue
+
+		var button = i as CheckBox
+		var shouldHide = new_text not in button.text.to_lower()
+		if shouldHide and button.button_pressed:
+			button.button_pressed = false
+		button.visible = not shouldHide
