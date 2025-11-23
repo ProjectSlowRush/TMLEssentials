@@ -121,6 +121,7 @@ func onHttpRequestRequestCompleted(_result: int, response_code: int, _headers: P
 	var current_version = ProjectSettings.get_setting("application/config/version")
 	if latest_tag != current_version:
 		%Popup.visible = true
+		%UpdatePanel.visible = true
 
 func onPopupGuiInput(event: InputEvent) -> void:
 	if event is not InputEventMouseButton:
