@@ -62,6 +62,7 @@ func onFileDialogDirSelected(dir: String) -> void:
 		i.queue_free()
 
 	%SearchFiles.text = ""
+	%SearchContainer.visible = len(textureFiles) > 0
 	%InfoContainer.visible = len(textureFiles) > 0
 	%Tooltip.text = "Select desired textures to create a preview. Each preview can have at most one of each EquipType" if len(textureFiles) > 0 else "[color=red]You selected a directory with no valid image files. Only those with an EquipType suffixed in its name (e.g. x_Head) can be used."
 
@@ -146,8 +147,4 @@ func onSearchFilesTextChanged(new_text: String) -> void:
 			i.show()
 			continue
 
-		var button = i as CheckBox
-		var shouldHide = new_text not in button.text.to_lower()
-		if shouldHide and button.button_pressed:
-			button.button_pressed = false
-		button.visible = not shouldHide
+		i.visible = new_text in i.text.to_lower()

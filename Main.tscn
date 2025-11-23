@@ -86,30 +86,19 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer" unique_id=1895121486]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=924073262]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="InfoContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=535030904]
+[node name="SearchContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1662371605]
 unique_name_in_owner = true
 visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer" unique_id=1991094305]
-layout_mode = 2
-
-[node name="SearchContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=1662371605]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/SearchContainer" unique_id=1368084307]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SearchContainer" unique_id=1368084307]
 layout_mode = 2
 
-[node name="FontAwesome" type="Label" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/SearchContainer/HBoxContainer" unique_id=1960779393]
+[node name="FontAwesome" type="Label" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SearchContainer/HBoxContainer" unique_id=1960779393]
 auto_translate_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
@@ -124,7 +113,7 @@ icon_size = 24
 icon_name = "magnifying-glass"
 metadata/_custom_type_script = "uid://meg4m8umy7m6"
 
-[node name="SearchFiles" type="LineEdit" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/SearchContainer/HBoxContainer" unique_id=1492298613]
+[node name="SearchFiles" type="LineEdit" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SearchContainer/HBoxContainer" unique_id=1492298613]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -136,23 +125,32 @@ clear_button_enabled = true
 select_all_on_focus = true
 caret_blink = true
 
-[node name="TextureList" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=763102039]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="CreatePreviewContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer" unique_id=578655540]
+[node name="CreatePreviewContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=578655540]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-theme_override_constants/separation = 16
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/CreatePreviewContainer" unique_id=1342620646]
-layout_mode = 2
-
-[node name="CreatePreview" type="Button" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/CreatePreviewContainer" unique_id=1393837205]
+[node name="CreatePreview" type="Button" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/CreatePreviewContainer" unique_id=1393837205]
 layout_mode = 2
 text = "Create Preview"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/CreatePreviewContainer" unique_id=1342620646]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=924073262]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InfoContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=535030904]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureList" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer" unique_id=763102039]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="PlaybackControlsContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1656020014]
 unique_name_in_owner = true
@@ -369,8 +367,8 @@ theme_override_constants/margin_bottom = 64
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="onHttpRequestRequestCompleted"]
 [connection signal="timeout" from="AnimationTimer" to="." method="onAnimationTimerTimeout"]
-[connection signal="text_changed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/SearchContainer/HBoxContainer/SearchFiles" to="." method="onSearchFilesTextChanged"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/InfoContainer/VBoxContainer/CreatePreviewContainer/CreatePreview" to="." method="onCreatePreviewPressed"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SearchContainer/HBoxContainer/SearchFiles" to="." method="onSearchFilesTextChanged"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/CreatePreviewContainer/CreatePreview" to="." method="onCreatePreviewPressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory" to="." method="onChooseDirectoryPressed"]
 [connection signal="canceled" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory/FileDialog" to="." method="onFileDialogCanceled"]
 [connection signal="dir_selected" from="VBoxContainer/HBoxContainer/HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ChooseDirectory/FileDialog" to="." method="onFileDialogDirSelected"]
