@@ -2,8 +2,8 @@ extends Node
 
 # Front -> Back
 # enum EquipType { Shield, Face, Beard, Head, Neck, HandsOff, Waist, Body, Shoes, Legs, Balloon, Back, Wings }
-enum EquipType { Shield, Face, Beard, Head, Neck, Waist, Body, Shoes, Legs }
-enum DrawnFrames { Shield, FrontShoulder, FrontArm, Face, Beard, Head, Neck, Waist, Body, Shoes, Legs, Balloon, BackArm, BackShoulder, Wings }
+enum EquipType { Shield, Face, Beard, Head, Neck, Waist, Body, Shoes, Legs, Back }
+enum DrawnFrames { Shield, FrontShoulder, FrontArm, Face, Beard, Head, Neck, Waist, Body, Shoes, Legs, Balloon, BackArm, BackShoulder, Back, Wings }
 
 var frame = 0
 @warning_ignore("unused_signal")
