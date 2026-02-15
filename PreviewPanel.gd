@@ -77,7 +77,7 @@ func advanceFrame():
 			if framePosition != -Vector2.ONE:
 				textureRect.texture.region = Rect2(framePosition.x * 40, framePosition.y * 56, 40, 56)
 
-			if walk and textureRect.name in ["Body", "BackShoulder", "BackArm", "FrontShoulder", "FrontArm", "Beard", "Neck"] and (Global.frame % 13) in [0, 1, 2, 7, 8, 9]:
+			if walk and textureRect.name in ["Body", "BackShoulder", "BackArm", "FrontShoulder", "FrontArm", "Beard", "Neck", "Back"] and (Global.frame % 13) in [0, 1, 2, 7, 8, 9]:
 				textureRect.texture.margin = Rect2(0, -2, 0, 0)
 			else:
 				textureRect.texture.margin = Rect2(0, 0, 0, 0)
